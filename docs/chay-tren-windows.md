@@ -116,7 +116,33 @@ cd $HOME\Documents\MAKE-MONEY
 npm run worker
 ```
 
-## Nếu vẫn lỗi
+## Tắt máy (hôm nay) và mở lại (ngày mai)
+
+App **không** chạy khi tắt máy hoặc đóng PowerShell. Tick “Đã hiểu”, checklist, sổ paper nằm trong file `data\app-state.json` trên máy bạn — **không mất** khi tắt.
+
+**Tắt hôm nay**
+
+1. Cửa sổ đang `npm run dev`: bấm vào đó, nhấn `Ctrl + C`. Hỏi `Terminate batch job?` thì gõ `Y` rồi Enter. Hoặc **đóng hẳn** cửa sổ PowerShell đó.
+2. Nếu có cửa sổ `npm run worker`: cũng `Ctrl + C` hoặc đóng cửa sổ.
+3. Tắt máy / ngủ máy bình thường.
+
+**Ngày mai xem lại** — không clone lại, không `npm install` lại (trừ khi cập nhật code):
+
+```powershell
+cd $HOME\Documents\MAKE-MONEY
+npm run dev
+```
+
+Mở [http://localhost:3000](http://localhost:3000). Worker (tuỳ chọn):
+
+```powershell
+cd $HOME\Documents\MAKE-MONEY
+npm run worker
+```
+
+Nếu `npm` lại báo scripts disabled: `npm.cmd run dev` hoặc chạy lại `Set-ExecutionPolicy` như bước 2.
+
+Nếu báo cổng 3000 đang dùng: còn cửa sổ `dev` cũ — đóng nó, hoặc Task Manager → `Node.js JavaScript Runtime` → End task.
 
 | Thông báo | Nguyên nhân | Làm gì |
 |-----------|-------------|--------|
