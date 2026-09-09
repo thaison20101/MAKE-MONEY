@@ -143,14 +143,20 @@ export function tickMeme(input: {
   for (const coin of radar) {
     if (!coin.listedOnCex && coin.rank <= 5) {
       alerts.push(`${coin.symbol} đang nổi trên DEX — chỉ cảnh báo, không auto-mua`);
-      pushEvent(account, { kind: "alert", symbol: coin.symbol, note: "DEX-only: không follow live" }, now);
+      const already = account.events.some((e) => e.kind === "alert" && e.symbol === coin.symbol);
+      if (!already) {
+        pushEvent(account, { kind: "alert", symbol: coin.symbol, note: "DEX-only: không follow live" }, now);
+      }
     }
     if (coin.spreadPct > settings.maxSpreadPct && coin.listedOnCex) {
-      pushEvent(
-        account,
-        { kind: "skip", symbol: coin.symbol, note: `Bỏ qua: spread ${coin.spreadPct}% > ${settings.maxSpreadPct}%` },
-        now
-      );
+      const already = account.events.some((e) => e.kind === "skip" && e.symbol === coin.symbol);
+      if (!already) {
+        pushEvent(
+          account,
+          { kind: "skip", symbol: coin.symbol, note: `Bỏ qua: spread ${coin.spreadPct}% > ${settings.maxSpreadPct}%` },
+          now
+        );
+      }
     }
   }
 

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { tickMeme } from "@/lib/meme-engine";
 import { loadState, resetState, saveState, updateState } from "@/lib/store";
 import { runWorkerTick } from "@/lib/worker-tick";
 import type { AppState, MemeSettings } from "@/lib/types";
@@ -29,6 +30,22 @@ export async function POST(req: Request) {
   if (body.type === "tick") {
     const next = await runWorkerTick(loadState(), { fetchRadar: false });
     return NextResponse.json(saveState(next));
+  }
+
+  if (body.type === "demoShock") {
+    const current = loadState();
+    if (current.prices[body.symbol] != null) {
+      current.prices[body.symbol] *= body.factor;
+    }
+    const meme = tickMeme({
+      account: current.paper,
+      settings: current.meme,
+      radar: current.radar,
+      prices: current.prices,
+      now: Date.now()
+    });
+    current.paper = meme.account;
+    return NextResponse.json(saveState(current));
   }
 
   const state = updateState((s) => {
@@ -62,9 +79,6 @@ export async function POST(req: Request) {
       }
       case "mode":
         n.tradingMode = body.tradingMode === "live" ? "live" : "paper";
-        break;
-      case "demoShock":
-        if (n.prices[body.symbol] != null) n.prices[body.symbol] *= body.factor;
         break;
       default:
         break;
