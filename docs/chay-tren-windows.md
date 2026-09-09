@@ -9,16 +9,28 @@ Làm đúng thứ tự dưới đây. **Không** cần mở PowerShell “Run as
 
 ## Bước 1 — Cài Git
 
-1. Tải [git-scm.com/download/win](https://git-scm.com/download/win) (64-bit).
-2. Cài, để mặc định, tick **Git from the command line**.
-3. **Đóng hết** cửa sổ PowerShell cũ, mở PowerShell mới.
-4. Gõ:
+Bạn có thể thấy trang **“Windows GUIs”** (GitHub Desktop, SourceTree, GitKraken, TortoiseGit). Đó là **app giao diện tùy chọn**, không phải bản cài Git bắt buộc.
 
-```powershell
-git --version
-```
+Chọn **một** trong hai:
 
-Phải hiện số phiên bản (ví dụ `git version 2.xx`).
+**A — Chỉ dòng lệnh (đủ cho project này)**
+
+1. Tải installer Git, không phải GUI: [https://git-scm.com/download/win](https://git-scm.com/download/win)
+2. Nếu site đẩy sang danh sách GUI: kéo lên / bấm **Downloads** → **Windows** → file **64-bit Git for Windows Setup**.
+3. Cài, để mặc định, để nguyên **Git from the command line**.
+4. Đóng hết PowerShell cũ, mở PowerShell mới, gõ `git --version`.
+
+**B — Muốn GUI: GitHub Desktop (miễn phí)**
+
+Repo đang ở GitHub nên GUI hợp nhất là **GitHub Desktop**. Không cần SourceTree / GitKraken / TortoiseGit để chạy tool này.
+
+1. Tải [https://desktop.github.com](https://desktop.github.com)
+2. File → Clone repository → URL `https://github.com/thaison20101/MAKE-MONEY.git` → clone vào `Documents`
+3. Current branch: chọn `cursor/crypto-passive-guide-f98f` (nhánh `ADMIN` gần như trống)
+4. Repository → **Open in Command Prompt** / PowerShell (để `cd` đúng thư mục repo)
+5. Vẫn phải cài **Node.js LTS** (bước 2) rồi `npm install` trong thư mục đó
+
+Sau khi có `git --version` (cách A hoặc B), sang bước 2.
 
 ## Bước 2 — Cài Node.js LTS (để có `npm`)
 
