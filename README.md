@@ -6,6 +6,19 @@ Dashboard tiếng Việt: **học Ethereum từ gốc**, **hướng dẫn cài a
 
 ## Chạy nhanh
 
+**Windows:** đừng gõ lệnh khi prompt là `PS C:\Windows\system32>`. Làm theo [docs/chay-tren-windows.md](docs/chay-tren-windows.md) (cài Git + Node LTS, clone repo, `cd` vào thư mục có `package.json`).
+
+```powershell
+cd $HOME\Documents\MAKE-MONEY
+git checkout cursor/crypto-passive-guide-f98f
+Copy-Item .env.example .env
+npm install
+npm test
+npm run dev
+```
+
+macOS / Linux (đã ở **trong** thư mục repo):
+
 ```bash
 cp .env.example .env
 npm install

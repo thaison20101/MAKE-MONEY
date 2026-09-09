@@ -19,7 +19,7 @@ Chỉ từ store / site chính thức:
 | Rabby hoặc MetaMask | Ví EVM | [rabby.io](https://rabby.io) / [metamask.io](https://metamask.io) |
 | Phantom | Ví Solana (sau này) | [phantom.app](https://phantom.app) |
 | Telegram Desktop | Cảnh báo + kênh dự án | [desktop.telegram.org](https://desktop.telegram.org) |
-| Node.js LTS | Chạy dashboard này | [nodejs.org](https://nodejs.org) |
+| Node.js LTS | Chạy dashboard này | [nodejs.org](https://nodejs.org) — bản **LTS**, tick Add to PATH |
 | Ledger Live (tuỳ chọn) | Ví lạnh số lớn | [ledger.com](https://www.ledger.com) |
 
 Kiểm tra URL trước khi tải. Ads giả MetaMask rất nhiều.
@@ -49,6 +49,19 @@ Xem [san-va-api.md](./san-va-api.md). Tóm tắt: 2FA, anti-phishing, API **Enab
 Nạp số nhỏ để thử. Paper trên tool không cần API.
 
 ## 6. Chạy project này
+
+**Windows PowerShell:** xem [chay-tren-windows.md](./chay-tren-windows.md). Tóm tắt: cài Git + Node LTS → đóng PowerShell → clone repo → `cd` vào thư mục có file `package.json` (không phải `C:\Windows\system32`) →:
+
+```powershell
+cd $HOME\Documents\MAKE-MONEY
+git checkout cursor/crypto-passive-guide-f98f
+Copy-Item .env.example .env
+npm install
+npm test
+npm run dev
+```
+
+macOS / Linux:
 
 ```bash
 cd thư-mục-repo

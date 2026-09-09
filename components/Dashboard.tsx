@@ -125,7 +125,7 @@ export function Dashboard() {
             </div>
             <div className="banner">
               Tải: Rabby/MetaMask, Telegram Desktop, Node.js LTS. Tạo: 1 ví (seed chỉ bạn), 1 sàn KYC, bot qua @BotFather.
-              Không gửi seed cho tool này.
+              Không gửi seed cho tool này. Windows: đừng chạy lệnh trong C:\Windows\system32 — xem docs/chay-tren-windows.md
             </div>
             <div className="card">
               {state.onboarding.map((s) => (

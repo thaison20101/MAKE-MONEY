@@ -104,7 +104,7 @@ export function createInitialState(cashUsd = 1000): AppState {
     telegramReady: false,
     onboarding: [
       { id: "security", title: "Bảo mật máy (trình duyệt, mật khẩu, 2FA)", done: false },
-      { id: "apps", title: "Tải Rabby/MetaMask, Telegram, Node.js", done: false },
+      { id: "apps", title: "Tải Rabby/MetaMask, Telegram, Node.js LTS (Windows: docs/chay-tren-windows.md)", done: false },
       { id: "accounts", title: "Tạo 1 ví + 1 sàn + bot Telegram", done: false },
       { id: "networks", title: "Thêm mạng + để gas + tách ví", done: false },
       { id: "api", title: "API sàn chỉ trade, tắt Withdraw", done: false },
