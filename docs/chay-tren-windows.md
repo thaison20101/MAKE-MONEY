@@ -47,6 +47,31 @@ npm -v
 
 Cả hai phải hiện số (ví dụ `v22.x` và `10.x`). Nếu vẫn “not recognized”: đăng xuất Windows hoặc restart máy, rồi mở PowerShell mới.
 
+### Nếu `npm -v` báo “running scripts is disabled” / `npm.ps1 cannot be loaded`
+
+PowerShell đang chặn script. Trong **cùng** cửa sổ (không cần Admin), gõ:
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+```
+
+Gõ `Y` rồi Enter. Kiểm tra lại:
+
+```powershell
+npm -v
+```
+
+Cách khác, không đổi policy: gọi `npm.cmd` thay vì `npm`:
+
+```powershell
+npm.cmd -v
+npm.cmd install
+npm.cmd test
+npm.cmd run dev
+```
+
+Hoặc mở **Command Prompt** (`cmd`) thay PowerShell — `npm` chạy bình thường ở đó.
+
 ## Bước 3 — Clone repo và vào đúng thư mục
 
 Mở PowerShell **thường**. Tạo thư mục làm việc rồi clone (nhánh có app + hướng dẫn):
@@ -98,7 +123,7 @@ npm run worker
 | `Cannot find path '...\system32\.env.example'` | Đang ở sai thư mục | `cd $HOME\Documents\MAKE-MONEY` rồi `dir .env.example` |
 | `npm is not recognized` | Chưa cài Node, hoặc chưa mở lại PowerShell | Cài LTS, đóng PowerShell, mở lại, `node -v` |
 | `env.example` không có sau `cd MAKE-MONEY` | Đang nhánh `ADMIN` | `git checkout cursor/crypto-passive-guide-f98f` |
-| `execution of scripts is disabled` | Policy PowerShell | Dùng `Copy-Item` như trên, hoặc `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` |
+| `npm.ps1 cannot be loaded` / scripts disabled | PowerShell chặn script | `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned` rồi `Y`; hoặc dùng `npm.cmd` / mở **cmd** |
 | Cổng 3000 bị chiếm | App cũ còn chạy | Đóng cửa sổ `npm run dev` cũ, hoặc Task Manager → dừng Node |
 
 Không dán seed / mật khẩu sàn vào PowerShell hay file `.env` ngoài API trade-only (xem [ranh-gioi-bot.md](./ranh-gioi-bot.md)).
