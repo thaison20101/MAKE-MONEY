@@ -127,6 +127,9 @@ export function Dashboard() {
               Tải: Rabby/MetaMask, Telegram Desktop, Node.js LTS. Tạo: 1 ví (seed chỉ bạn), 1 sàn KYC, bot qua @BotFather.
               Không gửi seed cho tool này. Windows: đừng chạy lệnh trong C:\Windows\system32 — xem docs/chay-tren-windows.md
             </div>
+            <div className="banner warn">
+              Bây giờ: học bài 01–05 + paper trên app. Tải ví/Telegram sau khi hiểu seed. Nạp tiền thật chỉ khi đã chốt/cắt được trên paper, số nhỏ có thể mất hết.
+            </div>
             <div className="card">
               {state.onboarding.map((s) => (
                 <label className="check" key={s.id}>
