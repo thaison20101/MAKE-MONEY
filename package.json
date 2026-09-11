@@ -1,0 +1,29 @@
+{
+  "name": "crypto-may-thu-dong",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Hướng dẫn Ethereum từ số 0 + máy 24/7 đa kênh (paper meme, airdrop, game official).",
+  "scripts": {
+    "dev": "next dev --port 3000 --hostname 0.0.0.0",
+    "build": "next build",
+    "start": "next start --port 3000 --hostname 0.0.0.0",
+    "worker": "tsx worker/index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "ccxt": "^4.5.78",
+    "next": "^15.5.2",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-markdown": "^10.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.18.0",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}
