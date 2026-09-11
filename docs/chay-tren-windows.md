@@ -144,6 +144,43 @@ Nếu `npm` lại báo scripts disabled: `npm.cmd run dev` hoặc chạy lại `
 
 Nếu báo cổng 3000 đang dùng: còn cửa sổ `dev` cũ — đóng nó, hoặc Task Manager → `Node.js JavaScript Runtime` → End task.
 
+## Truy cập từ máy / điện thoại khác
+
+`http://localhost:3000` **chỉ** mở được trên **máy đang chạy** `npm run dev`. Máy khác gõ localhost thì là máy của họ, không phải máy bạn.
+
+App đã lắng nghe mọi card mạng (`0.0.0.0`). Chỉ nên mở **cùng Wi‑Fi / LAN**. Đừng port-forward router ra internet (file `.env` có thể chứa API).
+
+**Trên máy đang chạy app (Windows):**
+
+1. Để nguyên cửa sổ `npm run dev` (phải đang Ready).
+2. Lấy IP LAN:
+
+```powershell
+ipconfig
+```
+
+Tìm **Wireless LAN adapter Wi-Fi** (hoặc Ethernet) → dòng **IPv4 Address**, dạng `192.168.x.x` hoặc `10.x.x.x`. Không dùng `127.0.0.1`.
+
+3. Mở cổng 3000 trên tường lửa (PowerShell **Run as administrator**, một lần):
+
+```powershell
+netsh advfirewall firewall add rule name="MAKE-MONEY 3000" dir=in action=allow protocol=TCP localport=3000
+```
+
+**Trên máy / điện thoại kia** (cùng Wi‑Fi, tắt VPN nếu VPN tách mạng):
+
+```
+http://192.168.x.x:3000
+```
+
+Thay `192.168.x.x` bằng IPv4 vừa copy. Phải có `http://` và `:3000`.
+
+Nếu không vào được: hai máy khác Wi‑Fi (guest/5GHz vs 2.4), firewall chặn, hoặc `npm run dev` đã tắt. Điện thoại dùng dữ liệu di động thì **không** thấy LAN nhà.
+
+Ở mạng khác (nhà bạn bè, 4G): cần VPN LAN kiểu Tailscale sau này — không hướng dẫn mở port WAN.
+
+## Nếu vẫn lỗi
+
 | Thông báo | Nguyên nhân | Làm gì |
 |-----------|-------------|--------|
 | `Cannot find path '...\system32\.env.example'` | Đang ở sai thư mục | `cd $HOME\Documents\MAKE-MONEY` rồi `dir .env.example` |
@@ -151,5 +188,6 @@ Nếu báo cổng 3000 đang dùng: còn cửa sổ `dev` cũ — đóng nó, ho
 | `env.example` không có sau `cd MAKE-MONEY` | Đang nhánh `ADMIN` | `git checkout cursor/crypto-passive-guide-f98f` |
 | `npm.ps1 cannot be loaded` / scripts disabled | PowerShell chặn script | `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned` rồi `Y`; hoặc dùng `npm.cmd` / mở **cmd** |
 | Cổng 3000 bị chiếm | App cũ còn chạy | Đóng cửa sổ `npm run dev` cũ, hoặc Task Manager → dừng Node |
+| Máy khác gõ localhost không ra | localhost = chính máy đó | Dùng `http://IPv4-máy-chạy-app:3000`, cùng Wi‑Fi, mở firewall cổng 3000 |
 
 Không dán seed / mật khẩu sàn vào PowerShell hay file `.env` ngoài API trade-only (xem [ranh-gioi-bot.md](./ranh-gioi-bot.md)).
