@@ -394,31 +394,7 @@ export function Dashboard() {
           </section>
         )}
 
-        {tab === "cex" && (
-          <section>
-            <div className="hero">
-              <h1>CEX</h1>
-              <p>Paper mặc định. Live chỉ khi .env TRADING_MODE=live và API trade-only.</p>
-            </div>
-            <div className="card">
-              <p>
-                Mode hiện tại: <strong>{state.tradingMode}</strong>
-              </p>
-              <div className="row">
-                <button className="btn" onClick={async () => setState(await post({ type: "mode", tradingMode: "paper" }))}>
-                  Paper
-                </button>
-                <button
-                  className="btn danger"
-                  onClick={async () => setState(await post({ type: "mode", tradingMode: "live" }))}
-                >
-                  Đánh dấu live (vẫn cần API; tool không rút tiền)
-                </button>
-              </div>
-              <p className="muted">Cash paper: ${state.paper.cashUsd.toFixed(2)} · Xem docs/san-va-api.md</p>
-            </div>
-          </section>
-        )}
+        {tab === "cex" && <CexPanel state={state} />}
 
         {tab === "game" && (
           <section>
@@ -474,5 +450,64 @@ export function Dashboard() {
         )}
       </main>
     </div>
+  );
+}
+
+type LiveStatus = {
+  liveConfigured: boolean;
+  envMode: string;
+  accepted: boolean;
+  hasKeys: boolean;
+  exchange: string;
+  maxUsdt: number;
+  maxOrderUsdt: number;
+};
+
+function CexPanel({ state }: { state: AppState }) {
+  const [live, setLive] = useState<LiveStatus | null>(null);
+  useEffect(() => {
+    fetch("/api/live-status")
+      .then((r) => r.json())
+      .then(setLive)
+      .catch(() => setLive(null));
+  }, []);
+
+  return (
+    <section>
+      <div className="hero">
+        <h1>CEX</h1>
+        <p>Nút trên web không đặt lệnh thật. Lệnh thật chỉ khi .env live + npm run worker. Xem docs/tien-that-hom-nay.md</p>
+      </div>
+      <div className="banner warn">
+        Tải ví + sàn từ link chính thức, nạp số nhỏ, API tắt Withdraw. Không gửi key/seed cho chat.
+      </div>
+      <div className="card">
+        <h3>Live trên máy này</h3>
+        {!live && <p>Đang đọc .env…</p>}
+        {live && (
+          <p>
+            {live.liveConfigured ? (
+              <span className="ok">Live thật: đã cấu hình ({live.exchange}, trần lệnh ${live.maxOrderUsdt})</span>
+            ) : (
+              <span className="warn">
+                Chưa live — mode={live.envMode}, accept={live.accepted ? "yes" : "no"}, key={live.hasKeys ? "có" : "chưa"}
+              </span>
+            )}
+          </p>
+        )}
+        <p className="muted">Cash sổ paper: ${state.paper.cashUsd.toFixed(2)}</p>
+        <a href="https://rabby.io" target="_blank" rel="noreferrer">
+          Tải Rabby
+        </a>
+        {" · "}
+        <a href="https://www.binance.com" target="_blank" rel="noreferrer">
+          Binance
+        </a>
+        {" · "}
+        <a href="https://www.bybit.com" target="_blank" rel="noreferrer">
+          Bybit
+        </a>
+      </div>
+    </section>
   );
 }

@@ -1,3 +1,4 @@
+export type PriceMap = Record<string, number>;
 export type TradingMode = "paper" | "live";
 
 export type Venue = "cex" | "dex";

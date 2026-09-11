@@ -60,7 +60,7 @@ Dán **địa chỉ ví A** (public) vào tab Ví trên app. Không dán seed.
 
 Xem [san-va-api.md](./san-va-api.md). Tóm tắt: 2FA, anti-phishing, API **Enable Trading**, **tắt Withdraw**, IP whitelist nếu có.
 
-Nạp số nhỏ để thử. Paper trên tool không cần API.
+Nạp số nhỏ để thử. Paper trên tool không cần API. Tiền thật: [tien-that-hom-nay.md](./tien-that-hom-nay.md).
 
 ## 6. Chạy project này
 

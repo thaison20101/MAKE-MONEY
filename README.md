@@ -40,9 +40,10 @@ Mục lục: [docs/README.md](docs/README.md)
 
 1. Tab **Học Ethereum** (15 bài)
 2. [docs/bat-dau-tu-dau.md](docs/bat-dau-tu-dau.md) — Rabby/MetaMask, sàn, Telegram, Node.js
-3. Tab **Bắt đầu** — tick checklist
-4. Tab **Meme / Radar** — paper follow + chốt ~5%
-5. [docs/ranh-gioi-bot.md](docs/ranh-gioi-bot.md)
+3. [docs/tien-that-hom-nay.md](docs/tien-that-hom-nay.md) — tải app, tạo TK, nạp nhỏ, bật live API
+4. Tab **Bắt đầu** — tick checklist
+5. Tab **Meme / Radar** — paper follow + chốt ~5%
+6. [docs/ranh-gioi-bot.md](docs/ranh-gioi-bot.md)
 
 ## Bot làm / không làm
 
@@ -51,4 +52,4 @@ Mục lục: [docs/README.md](docs/README.md)
 
 ## Live CEX
 
-`TRADING_MODE=paper` mặc định. Đổi `live` chỉ khi đã tạo API **trade-only** (xem [docs/san-va-api.md](docs/san-va-api.md)). Engine lệnh trong repo hiện mô phỏng paper trên dữ liệu local; gắn lệnh sàn thật khi bạn đã hiểu rủi ro và có key.
+`TRADING_MODE=paper` mặc định. Live thật: xem [docs/tien-that-hom-nay.md](docs/tien-that-hom-nay.md) — cần `I_ACCEPT_LIVE_TRADING=yes` + API **không withdraw**. Worker (`npm run worker`) mới đặt lệnh; nút trên web vẫn paper.

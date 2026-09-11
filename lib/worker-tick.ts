@@ -3,6 +3,7 @@ import { runEnabledModules } from "./modules";
 import { fetchPublicRadar } from "./radar-fetch";
 import { fetchAllowlistResearch } from "./research-fetch";
 import { notifyTelegram } from "./telegram";
+import { isLiveConfigured, loadDotEnv } from "./live-config";
 import type { AppState } from "./types";
 
 function walkPrices(prices: Record<string, number>, now: number): Record<string, number> {
@@ -15,16 +16,20 @@ function walkPrices(prices: Record<string, number>, now: number): Record<string,
   return next;
 }
 
-export async function runWorkerTick(state: AppState, opts?: { fetchRadar?: boolean }): Promise<AppState> {
+export async function runWorkerTick(
+  state: AppState,
+  opts?: { fetchRadar?: boolean; skipPriceWalk?: boolean }
+): Promise<AppState> {
+  loadDotEnv();
   const now = Date.now();
   let next: AppState = structuredClone(state);
 
   if (opts?.fetchRadar !== false) {
     try {
-      const live = await fetchPublicRadar();
-      if (live.length) {
+      const radarLive = await fetchPublicRadar();
+      if (radarLive.length) {
         const seedCex = next.radar.filter((c) => c.listedOnCex);
-        const merged = [...live, ...seedCex.filter((s) => !live.some((l) => l.symbol === s.symbol))];
+        const merged = [...radarLive, ...seedCex.filter((s) => !radarLive.some((l) => l.symbol === s.symbol))];
         next.radar = merged.slice(0, 24).map((c, i) => ({ ...c, rank: i + 1 }));
         for (const c of next.radar) {
           if (next.prices[c.symbol] == null) next.prices[c.symbol] = 1;
@@ -47,7 +52,9 @@ export async function runWorkerTick(state: AppState, opts?: { fetchRadar?: boole
     }
   }
 
-  next.prices = walkPrices(next.prices, now);
+  if (!opts?.skipPriceWalk) {
+    next.prices = walkPrices(next.prices, now);
+  }
 
   if (next.modules.find((m) => m.id === "meme-wave")?.enabled) {
     const meme = tickMeme({
@@ -59,11 +66,13 @@ export async function runWorkerTick(state: AppState, opts?: { fetchRadar?: boole
     });
     next.paper = meme.account;
     const lastBuy = meme.account.events.find((e) => e.kind === "buy" && now - e.at < 2000);
-    if (lastBuy) {
+    if (lastBuy && !isLiveConfigured()) {
       await notifyTelegram(`Paper follow ${lastBuy.symbol} @ ${lastBuy.price}`);
     }
-    const lastTp = meme.account.events.find((e) => (e.kind === "sell_tp" || e.kind === "sell_scale") && now - e.at < 2000);
-    if (lastTp) {
+    const lastTp = meme.account.events.find(
+      (e) => (e.kind === "sell_tp" || e.kind === "sell_scale") && now - e.at < 2000
+    );
+    if (lastTp && !isLiveConfigured()) {
       await notifyTelegram(`Chốt sớm ${lastTp.symbol} PnL ${lastTp.pnlUsd}`);
     }
   }

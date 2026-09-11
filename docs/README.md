@@ -6,6 +6,7 @@
 
 1. [Học Ethereum từ gốc](./hoc-ethereum/README.md)
 2. [Bắt đầu từ số 0](./bat-dau-tu-dau.md) — tải app, tạo tài khoản. **Windows:** [chay-tren-windows.md](./chay-tren-windows.md)
+3. **Tiền thật (số nhỏ):** [tien-that-hom-nay.md](./tien-that-hom-nay.md)
 3. [Ví và mạng](./vi-va-mang.md)
 4. [Sàn và API](./san-va-api.md)
 5. [Máy 24/7 thụ động](./may-24h-thu-dong.md)

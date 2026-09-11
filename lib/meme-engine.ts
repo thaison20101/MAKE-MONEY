@@ -3,11 +3,10 @@ import type {
   MemeSettings,
   PaperAccount,
   Position,
+  PriceMap,
   RadarCoin,
   TradeEvent
 } from "./types";
-
-export type PriceMap = Record<string, number>;
 
 function dayKey(now: number): string {
   return new Date(now).toISOString().slice(0, 10);
